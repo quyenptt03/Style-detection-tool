@@ -1,0 +1,43 @@
+<div class="container mx-auto p-10 items-center justify-center flex flex-col">
+  <h2 class="text-3xl mb-10 uppercase">Style Detection Tool</h2>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
+  >
+    <div class="mb-6">
+      <label class="block text-gray-700 font-bold mb-2">URL:</label>
+      <input
+        type="text"
+        formControlName="url"
+        placeholder="https://example.com"
+        class="w-full border-2 border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
+      />
+      <div
+        *ngIf="form.get('url')?.invalid && form.get('url')?.touched"
+        class="text-red-500 text-sm mt-2"
+      >
+        URL không hợp lệ
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 font-bold mb-2"
+        >Chọn file theme (.json):</label
+      >
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        class="w-full border-2 border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+    >
+      Gửi
+    </button>
+  </form>
+</div>

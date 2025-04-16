@@ -1,0 +1,103 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Quyen\\TCMA\\StyleDetectionTool\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\styledetectiontool\\styledetectiontool\\controllers\\analyzecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\controllers\\analyzecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\styledetectiontool\\styledetectiontool\\utils\\styleconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\utils\\styleconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\styledetectiontool\\styledetectiontool\\utils\\crawhtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\utils\\crawhtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\styledetectiontool\\styledetectiontool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\styledetectiontool\\styledetectiontool\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StyleConverter.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Utils\\StyleConverter.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\Utils\\StyleConverter.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Utils\\StyleConverter.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Utils\\StyleConverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T03:32:44.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CrawHTML.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Utils\\CrawHTML.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\Utils\\CrawHTML.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Utils\\CrawHTML.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Utils\\CrawHTML.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB8AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T09:02:10.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\WeatherForecast.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\WeatherForecast.cs",
+              "RelativeToolTip": "StyleDetectionTool\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T09:00:25.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Program.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\Program.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Program.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAcwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T08:59:59.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AnalyzeController.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Controllers\\AnalyzeController.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\Controllers\\AnalyzeController.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\StyleDetectionTool\\StyleDetectionTool\\Controllers\\AnalyzeController.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Controllers\\AnalyzeController.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAswFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T09:17:11.38Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
