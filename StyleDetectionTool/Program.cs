@@ -1,3 +1,6 @@
+using StyleDetectionTool.Models;
+using StyleDetectionTool.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +15,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
+builder.Services.AddScoped<CrawHTMLService>();
+builder.Services.AddScoped<StyleStructure>();
+builder.Services.AddScoped<StyleCheckingService>();
+builder.Services.AddHttpClient<ApiService>();
 
 var app = builder.Build();
 

@@ -20,10 +20,7 @@ export class AppComponent {
 
   onFileChange(event: any) {
     const file: File = event.target.files[0];
-    if (
-      file &&
-      (file.type === 'application/json' || file.type === 'text/plain')
-    ) {
+    if (file && file.type === 'application/json') {
       this.selectedFile = file;
     } else {
       this.selectedFile = null;
