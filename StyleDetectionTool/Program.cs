@@ -14,15 +14,23 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+    });
 });
-builder.Services.AddScoped<CrawHTMLService>();
-builder.Services.AddScoped<StyleStructure>();
+
+builder.Services.AddScoped<ThemeConfig>();
 builder.Services.AddScoped<StyleCheckingService>();
 builder.Services.AddHttpClient<ApiService>();
 
 var app = builder.Build();
 
 app.UseCors("AllowAll");
+app.UseCors("AllowAngularDev");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -34,6 +42,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.MapFallbackToFile("index.html");
 
 app.MapControllers();
 

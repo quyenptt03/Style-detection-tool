@@ -1,4 +1,6 @@
-﻿using StyleDetectionTool.Models;
+﻿using AngleSharp.Dom;
+using StyleDetectionTool.Models;
+using System.Collections.Concurrent;
 
 namespace StyleDetectionTool.Services
 {
@@ -6,148 +8,188 @@ namespace StyleDetectionTool.Services
     {
         public StyleCheckingService() { }
 
-        public Dictionary<string, UsageInfo> AnalyzeClassUsage(List<Element> elements, List<string> checkClass)
+        public void ProcessButtons(ThemeConfig config, CrawledDocument page, ConcurrentBag<StyleUsage> result)
         {
-            var result = checkClass.ToDictionary(c => c, c => new UsageInfo());
-
-            for (int i = 0; i < elements.Count; i++)
+            foreach (var btn in config.Buttons)
             {
-                var element = elements[i];
-                if (string.IsNullOrWhiteSpace(element.Class)) continue;
+                var query = $".{btn.Class.Replace(" ", ".")}.{btn.Id}".EscapeCssSelector();
+                var elements = page.Document.QuerySelectorAll(query);
 
-                var elementClassList = element.Class.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                foreach (var cls in elementClassList)
+                foreach (var element in elements)
                 {
-                    if (!checkClass.Contains(cls)) continue;
-
-                    result[cls].Used = true;
-
-                    string sectionIdentifier = null;
-
-                    for (int j = i - 1; j >= 0; j--)
+                    var section = element.Ancestors<IElement>()
+                        .FirstOrDefault(x => (x.ClassName ?? "").ToLower().Contains("section"));
+                    if (section != null)
                     {
-                        var parent = elements[j];
-                        if (parent.Depth < element.Depth)
+                        var sectionClass = (section.ClassName ?? "").ToLower()
+.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+.FirstOrDefault(cls => cls.Contains("section"));
+
+                        result.Add(new StyleUsage
                         {
-                            if (parent.Class != null &&
-                                !elements[j].Text.Contains("hidden by cat") &&
-                                parent.Class.Contains("hide") &&
-                                parent.Class.Contains("hidden"))
-                            {
-                                sectionIdentifier = !string.IsNullOrWhiteSpace(parent.Text)
-                                    ? parent.Text.Trim()
-                                    : parent.Tag;
-                                break;
-                            }
+                            Name = btn.Id,
+                            IsUsed = true,
+                            InUsed = new()
+                    {
+                        new PageUsage
+                        {
+                            Url = page.Url,
+                            Title = page.Title,
+                            Section = new() { sectionClass }
                         }
                     }
-
-                    if (sectionIdentifier != null && !result[cls].InUsed.Contains(sectionIdentifier))
-                    {
-                        result[cls].InUsed.Add(sectionIdentifier);
+                        });
                     }
                 }
             }
-
-            return result;
         }
 
-        public Dictionary<string, UsageInfo> AnalyzeColorUsage(List<Element> elements, List<string> colors)
+        public void ProcessParagraphs(ThemeConfig config, CrawledDocument page, ConcurrentBag<StyleUsage> result)
         {
-            var result = colors.ToDictionary(c => c, c => new UsageInfo());
-
-            for (int i = 0; i < elements.Count; i++)
+            foreach (var para in config.Paragraphs)
             {
-                var element = elements[i];
-                var tag = element.Tag?.ToLower() ?? "";
+                var elements = page.Document.All
+                    .Where(el => (el.ClassName ?? "").Contains(para.Class) && (el.ClassName ?? "").Contains(para.Id))
+                    .ToList();
 
-                // CASE 1: TAG == STYLE
-                if (tag == "style" && !string.IsNullOrEmpty(element.Text))
+                foreach (var element in elements)
                 {
-                    string styleText = element.Text;
+                    var section = element.Ancestors<IElement>()
+                        .FirstOrDefault(x => (x.ClassName ?? "").ToLower().Contains("section"));
+                    if (section != null)
+                    {
+                        var sectionClass = (section.ClassName ?? "").ToLower()
+.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+.FirstOrDefault(cls => cls.Contains("section"));
 
-                    var rules = styleText.Split('}');
+                        result.Add(new StyleUsage
+                        {
+                            Name = para.Id,
+                            IsUsed = true,
+                            InUsed = new()
+                    {
+                        new PageUsage
+                        {
+                            Url = page.Url,
+                            Title = page.Title,
+                            Section = new() { sectionClass }
+                        }
+                    }
+                        });
+                    }
+                }
+            }
+        }
+
+        public void ProcessColors(ThemeConfig config, CrawledDocument page, ConcurrentBag<StyleUsage> result)
+        {
+            foreach (var color in config.ColorNames)
+            {
+                var colorElements = page.Document.All.Where(el =>
+                    (!string.IsNullOrEmpty(el.ClassName) && el.ClassName.Contains(color)) ||
+                    (!string.IsNullOrEmpty(el.GetAttribute("style")) && el.GetAttribute("style")!.Contains($"var(--{color})"))
+                );
+
+                foreach (var el in colorElements)
+                {
+                    var section = el.Ancestors<IElement>().FirstOrDefault(x => (x.ClassName ?? "").ToLower().Contains("section"));
+                    if (section != null)
+                    {
+                        var sectionClass = (section.ClassName ?? "").ToLower()
+.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+.FirstOrDefault(cls => cls.Contains("section"));
+
+                        result.Add(new StyleUsage
+                        {
+                            Name = color,
+                            IsUsed = true,
+                            InUsed = new()
+                    {
+                        new PageUsage
+                        {
+                            Url = page.Url,
+                            Title = page.Title,
+                            Section = new() { sectionClass }
+                        }
+                    }
+                        });
+                    }
+                }
+            }
+        }
+        public void ProcessColorsInTheme(ThemeConfig config, CrawledDocument page, ConcurrentBag<StyleUsage> result)
+        {
+            foreach (var color in config.ColorNames)
+            {
+                var styleTags = page.Document.QuerySelectorAll("style");
+
+                foreach (var tag in styleTags)
+                {
+                    var text = tag.TextContent ?? "";
+                    var rules = text.Split('}');
+
                     foreach (var rule in rules)
                     {
                         var parts = rule.Split('{');
-                        if (parts.Length != 2) continue;
+                        if (parts.Length != 2 || !parts[1].Contains($"var(--{color})")) continue;
 
-                        var selector = parts[0].Trim();   // .tcma-sb .heading2
-                        var body = parts[1];              // ...color:var(--secondary)...
+                        var selector = parts[0].Trim();
+                        var group = selector.Split('.').LastOrDefault(s =>
+                            s.StartsWith("button") || s.StartsWith("paragraph") || s.StartsWith("heading"));
 
-                        foreach (var color in colors)
+                        if (group != null)
                         {
-                            if (body.Contains($"var(--{color})"))
+                            result.Add(new StyleUsage
                             {
-                                result[color].Used = true;
-
-                                string groupName = "unknown";
-                                if (selector.Contains(".button"))
-                                    groupName = selector.Split('.').Last(s => s.StartsWith("button"));
-                                else if (selector.Contains(".paragraph"))
-                                    groupName = selector.Split('.').Last(s => s.StartsWith("paragraph"));
-                                else if (selector.Contains(".heading"))
-                                    groupName = selector.Split('.').Last(s => s.StartsWith("heading"));
-                                else
-                                    groupName = "default-font";
-
-                                if (!result[color].InUsed.Contains($"style: {groupName}"))
-                                    result[color].InUsed.Add($"style: {groupName}");
+                                Name = color,
+                                IsUsed = true,
+                                InUsed = new()
+                        {
+                            new PageUsage
+                            {
+                                Url = "Theme config",
+                                Title = "Theme config",
+                                Section = new() { group }
                             }
                         }
-                    }
-                }
-
-                // CASE 2: THẺ KHÁC STYLE
-                else
-                {
-                    foreach (var color in colors)
-                    {
-                        bool matched = false;
-
-                        if (!string.IsNullOrEmpty(element.Class) &&
-                            element.Class.Contains(color))
-                        {
-                            matched = true;
-                        }
-
-                        if (!matched && !string.IsNullOrEmpty(element.Style) &&
-                            element.Style.Contains($"var(--{color})"))
-                        {
-                            matched = true;
-                        }
-
-                        if (matched)
-                        {
-                            result[color].Used = true;
-
-                            // tìm section có class hide hidden
-                            string section = null;
-                            for (int j = i; j >= 0; j--)
-                            {
-                                if (elements[j].Depth < element.Depth &&
-                                    elements[j].Class != null &&
-                                    elements[j].Tag != "small" &&
-                                    elements[j].Class.Contains("hide") &&
-                                    elements[j].Class.Contains("hidden"))
-                                {
-                                    section = !string.IsNullOrWhiteSpace(elements[j].Text)
-                                        ? elements[j].Text.Trim()
-                                        : elements[j].Tag;
-                                    break;
-                                }
-                            }
-
-                            if (section != null && !result[color].InUsed.Contains($"section: {section}"))
-                            {
-                                result[color].InUsed.Add($"section: {section}");
-                            }
+                            });
                         }
                     }
                 }
             }
-
-            return result;
         }
+        public void MergeStyleUsage(List<StyleUsage> baseList, ConcurrentBag<StyleUsage> updates)
+        {
+            foreach (var updated in updates)
+            {
+                var existing = baseList.FirstOrDefault(s => s.Name == updated.Name);
+                if (existing != null)
+                {
+                    existing.IsUsed |= updated.IsUsed;
+
+                    foreach (var pageUsage in updated.InUsed)
+                    {
+                        var existingPage = existing.InUsed.FirstOrDefault(x => x.Url == pageUsage.Url);
+                        if (existingPage != null)
+                        {
+                            foreach (var section in pageUsage.Section)
+                            {
+                                if (!existingPage.Section.Contains(section))
+                                    existingPage.Section.Add(section);
+                            }
+                        }
+                        else
+                        {
+                            existing.InUsed.Add(pageUsage);
+                        }
+                    }
+                }
+                else
+                {
+                    baseList.Add(updated);
+                }
+            }
+        }
+
     }
 }

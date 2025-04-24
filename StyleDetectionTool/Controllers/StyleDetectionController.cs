@@ -1,130 +1,163 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Xml.Linq;
+using AngleSharp;
+using AngleSharp.Dom;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Playwright;
 using StyleDetectionTool.Models;
 using StyleDetectionTool.Services;
-using System.Diagnostics;
-using System.Text.Json;
 
-namespace StyleDetectionTool.Controllers
+namespace StyleDetectionTool.Controllers;
+
+public class StyleDetectionController(
+    ApiService apiService,
+    StyleCheckingService styleCheckingService)
+    : Controller
 {
-    public class StyleDetectionController : Controller
+
+    [HttpPost("api/style-detection")]
+    public async Task<IActionResult> StyleDetection([FromForm] Input input)
     {
-        private readonly CrawHTMLService _crawlHTMLService;
-        private readonly StyleStructure _style;
-        private readonly ApiService _apiService;
-        private readonly StyleCheckingService _styleCheckingService;
-
-        public StyleDetectionController(CrawHTMLService crawlHTMLService, StyleStructure styleStructure, ApiService apiService, StyleCheckingService styleCheckingService)
+        var sw = Stopwatch.StartNew();
+        if (String.IsNullOrWhiteSpace(input.Link))
         {
-            _crawlHTMLService = crawlHTMLService;
-            _style = styleStructure;
-            _apiService = apiService;
-            _styleCheckingService = styleCheckingService;
+            return BadRequest("No url found");
         }
 
-        [HttpGet("call-external")]
-        public async Task<IActionResult> CallExternalApi(string url)
+        if (input.ThemeFile == null || input.ThemeFile.Length == 0)
+            return BadRequest("No theme file uploaded.");
+
+        var error = "";
+        var urlList = await apiService.GetDataFromApiAsync(input.Link);
+
+        using var reader = new StreamReader(input.ThemeFile.OpenReadStream());
+        string jsonContent = await reader.ReadToEndAsync();
+
+        var jsonData = JsonSerializer.Deserialize<JsonElement>(jsonContent);
+
+        var themeConfig = JsonSerializer.Deserialize<ThemeConfig>(jsonContent,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            ?? throw new JsonException("Failed to deserialize JSON to RootObject.");
+
+        var allStyleIds = themeConfig.Buttons.Select(b => b.Id)
+            .Concat(themeConfig.Paragraphs.Select(p => p.Id))
+            .Concat(themeConfig.ColorNames.Select(c => c))
+            .Distinct();
+
+        var styleUsage = allStyleIds.Select(styleId => new StyleUsage
         {
-            List<string> result = await _apiService.GetDataFromApiAsync(url);
-            return Ok(result);
-        }
+            Name = styleId,
+            IsUsed = false,
+            InUsed = new List<PageUsage>()
+        }).ToList();
 
-        [HttpPost("upload-json")]
-        public async Task<IActionResult> UploadStyleJson(IFormFile file)
+        try
         {
-            if (file == null || file.Length == 0)
-                return BadRequest("No file uploaded.");
-
-            using var reader = new StreamReader(file.OpenReadStream());
-            string jsonContent = await reader.ReadToEndAsync();
-
-            var jsonData = JsonSerializer.Deserialize<JsonElement>(jsonContent);
-
-            var result = _style.Handle(jsonData);
-
-            return Ok(result);
-        }
-        [HttpGet("crawl-html")]
-        public async Task<IActionResult> CrawlHtml(string url)
-        {
-           
-            var stopwatch = Stopwatch.StartNew();
-            using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new() { Headless = true });
-            try
+            var crawledDocuments = await GetHtmlDocuments(urlList);
+            var cancellationTokenSource = new CancellationTokenSource();
+            var options = new ParallelOptions
             {
-                List<Element> elements = await _crawlHTMLService.CrawlSinglePage(browser, url);
-                stopwatch.Stop();
-                return Ok(new
+                MaxDegreeOfParallelism = Mock.MaxConcurrency,
+                CancellationToken = cancellationTokenSource.Token
+            };
+
+            var updatedStyles = new ConcurrentBag<StyleUsage>();
+            var firstValidPage = crawledDocuments.FirstOrDefault(doc => doc.Title != "Page Not Found");
+
+            Parallel.ForEach(crawledDocuments, options, crawled =>
+            {
+                var document = crawled.Document;
+                var url = crawled.Url;
+                var title = crawled.Title;
+
+                if (title == "Page Not Found")
+                    return;
+
+
+                if (crawled.Url == firstValidPage?.Url)
                 {
-                    durationInMilliseconds = stopwatch.ElapsedMilliseconds,
-                    elements
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
+                    styleCheckingService.ProcessColorsInTheme(themeConfig, crawled, updatedStyles);
+                }
 
-        [HttpGet("crawl-multi-page")]
-        public async Task<IActionResult> CrawlHtmlMultiPage(string url)
+                styleCheckingService.ProcessButtons(themeConfig, crawled, updatedStyles);
+                styleCheckingService.ProcessParagraphs(themeConfig, crawled, updatedStyles);
+                styleCheckingService.ProcessColors(themeConfig, crawled, updatedStyles);
+
+            });
+
+            styleCheckingService.MergeStyleUsage(styleUsage, updatedStyles);
+        }
+        catch (Exception ex)
         {
-
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
-                List<string> urlList = await _apiService.GetDataFromApiAsync(url);
-             
-
-                List<Page> elements = await _crawlHTMLService.CrawlMultiplePage(urlList);
-                stopwatch.Stop();
-                return Ok(new
-                {
-                    durationInMilliseconds = stopwatch.ElapsedMilliseconds,
-                    elements
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            error = ex.Message;
         }
 
-        [HttpPost("style-detection")]
-        public async Task<IActionResult> StyleDetection(string url, IFormFile file)
+        sw.Stop();
+        return Ok(new
         {
-            using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new() { Headless = true });
-            var stopwatch = Stopwatch.StartNew();
-            if (file == null || file.Length == 0)
-                return BadRequest("No theme file uploaded.");
-
-            using var reader = new StreamReader(file.OpenReadStream());
-            string jsonContent = await reader.ReadToEndAsync();
-
-            var jsonData = JsonSerializer.Deserialize<JsonElement>(jsonContent);
-
-            var themeData = _style.Handle(jsonData);
-
-            try
-            {
-                List<Element> elements = await _crawlHTMLService.CrawlSinglePage(browser, url);
-                var stylesResult = _styleCheckingService.AnalyzeClassUsage(elements, themeData.Styles);
-                var colorResult = _styleCheckingService.AnalyzeColorUsage(elements, themeData.Colors);
-
-                stopwatch.Stop();
-                return Ok(new
-                {
-                    durationInMilliseconds = stopwatch.ElapsedMilliseconds,
-                    styles = stylesResult,
-                    color = colorResult
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
+            Elapsed = $"{sw.ElapsedMilliseconds / 1000} s",
+            error,
+            result = styleUsage
+        });
     }
+
+    private async Task<List<CrawledDocument>> GetHtmlDocuments(List<string> urls)
+    {
+        var results = new ConcurrentBag<CrawledDocument>();
+        var semaphore = new SemaphoreSlim(Mock.MaxConcurrency);
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser =
+            await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
+        var config = Configuration.Default;
+        var context = BrowsingContext.New(config);
+
+        var tasks = urls.Select(async url =>
+        {
+            await semaphore.WaitAsync();
+            try
+            {
+                var page = await browser.NewPageAsync();
+
+                await page.RouteAsync("**/*", async route =>
+                {
+                    var type = route.Request.ResourceType;
+                    if (type is "image" or "font" or "media")
+                        await route.AbortAsync();
+                    else
+                        await route.ContinueAsync();
+                });
+
+                await page.GotoAsync(url,
+                    new PageGotoOptions { WaitUntil = WaitUntilState.NetworkIdle, Timeout = 300000 });
+
+                var html = await page.ContentAsync();
+                var document = await context.OpenAsync(req => req.Content(html));
+                var title = document.Title ?? "";
+
+                results.Add(new CrawledDocument
+                {
+                    Document = document,
+                    Url = url,
+                    Title = title
+                });
+            }
+            catch (Exception ex)
+            {
+                $"Error crawling {url}: {ex.Message}".WriteLog();
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        });
+
+        await Task.WhenAll(tasks);
+        return results.ToList();
+    }
+
 }
