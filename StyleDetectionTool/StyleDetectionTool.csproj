@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\" />
+	 <Content Include="wwwroot\**\*" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

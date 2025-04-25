@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\controllers\\styledetectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\controllers\\styledetectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\styledetectiontool.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\styledetectiontool.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\controllers\\styledetectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\controllers\\styledetectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|d:\\quyen\\tcma\\style-detection-tool-2 (1)\\style-detection-tool-2\\styledetectiontool\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E36C00A8-B58C-4994-A1FB-715E2E645AD0}|StyleDetectionTool\\StyleDetectionTool.csproj|solutionrelative:styledetectiontool\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,37 +38,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\appsettings.Development.json",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\appsettings.Development.json",
+              "RelativeToolTip": "StyleDetectionTool\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-25T08:33:59.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StyleDetectionTool",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\StyleDetectionTool.csproj",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\StyleDetectionTool.csproj",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\StyleDetectionTool.csproj",
+              "RelativeToolTip": "StyleDetectionTool\\StyleDetectionTool.csproj",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-25T06:28:27.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\wwwroot\\index.html",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\wwwroot\\index.html",
+              "RelativeToolTip": "StyleDetectionTool\\wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-04-25T04:22:41.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\appsettings.json",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\appsettings.json",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\appsettings.json",
+              "RelativeToolTip": "StyleDetectionTool\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-25T03:50:40.267Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Program.cs",
+              "RelativeDocumentMoniker": "StyleDetectionTool\\Program.cs",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Program.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Program.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAIwEYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-25T03:18:07.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "StyleDetectionController.cs",
               "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Controllers\\StyleDetectionController.cs",
               "RelativeDocumentMoniker": "StyleDetectionTool\\Controllers\\StyleDetectionController.cs",
-              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Controllers\\StyleDetectionController.cs*",
-              "RelativeToolTip": "StyleDetectionTool\\Controllers\\StyleDetectionController.cs*",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAowH0AAAAMAAAAAAAAAA==",
+              "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Controllers\\StyleDetectionController.cs",
+              "RelativeToolTip": "StyleDetectionTool\\Controllers\\StyleDetectionController.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAgwAAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-25T03:07:57.197Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "StyleDetectionTool\\Properties\\launchSettings.json",
               "ToolTip": "D:\\Quyen\\TCMA\\Style-detection-tool-2 (1)\\Style-detection-tool-2\\StyleDetectionTool\\Properties\\launchSettings.json",
               "RelativeToolTip": "StyleDetectionTool\\Properties\\launchSettings.json",
-              "ViewState": "AgIAABYAAAAAAAAAAAAowCkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-04-25T03:06:42.411Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             }
           ]
         }
