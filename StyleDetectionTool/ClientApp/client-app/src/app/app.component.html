@@ -1,6 +1,6 @@
 <div class="container mx-auto py-8 px-4">
   <div class="card w-full max-w-7xl mx-auto">
-    <div class="card-header text-center">
+    <div class="card-header">
       <h1 class="card-title text-3xl font-bold">STYLE DETECTION TOOL</h1>
       <p class="card-description">
         Visualize styling elements used in your design
@@ -37,7 +37,7 @@
 
       <div class="mt-4 space-y-8">
         <div class="grid grid-cols-5 gap-4">
-          <div class="col-span-3">
+          <div class="col-span-5 md:col-span-3">
             <h2 class="text-2xl font-bold mb-4">Style Guide</h2>
             <form
               [formGroup]="form"
@@ -74,13 +74,13 @@
 
               <button
                 type="submit"
-                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                class="w-full bg-black hover:bg-black/80 text-white font-bold py-2 px-4 rounded-md transition duration-300"
               >
                 Submit
               </button>
             </form>
 
-            <div *ngIf="urlList.length > 0" class="mt-4">
+            <div *ngIf="urlList.length > 0 && results" class="mt-4">
               <label class="block mb-2 font-medium">List of URLs:</label>
               <textarea
                 class="w-full h-64 border rounded p-2"
@@ -89,13 +89,16 @@
               ></textarea>
             </div>
           </div>
-          <div class="col-span-2 space-y-6" *ngIf="results && !isLoading">
+          <div
+            class="col-span-5 md:col-span-2 space-y-6"
+            *ngIf="results && !isLoading"
+          >
             <h2 class="text-2xl font-bold">Analyze results</h2>
             <div
               class="mb-6 overflow-hidden border-slate-200 shadow-sm rounded-md p-6"
             >
               <h2 class="text-xl font-bold my-4">Colors</h2>
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div
                   *ngFor="let item of GetColor()"
                   class="flex flex-col items-center"

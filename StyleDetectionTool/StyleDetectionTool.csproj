@@ -7,8 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\favicon.ico" />
+    <Content Remove="wwwroot\index.html" />
+    <Content Remove="wwwroot\main-4MAHQNS6.js" />
+    <Content Remove="wwwroot\polyfills-FFHMD2TL.js" />
+    <Content Remove="wwwroot\styles-IYAKSU75.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Anglesharp" Version="1.3.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Resilience" Version="9.4.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.51.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
@@ -16,6 +26,14 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\main-4MAHQNS6.js" />
+    <None Include="wwwroot\polyfills-FFHMD2TL.js" />
+    <None Include="wwwroot\styles-IYAKSU75.css" />
   </ItemGroup>
 
 </Project>

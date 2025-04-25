@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Playwright;
 using StyleDetectionTool.Models;
 using StyleDetectionTool.Services;
+using Polly;
 
 namespace StyleDetectionTool.Controllers;
 
@@ -122,7 +123,7 @@ public class StyleDetectionController(
             try
             {
                 var page = await browser.NewPageAsync();
-
+            
                 await page.RouteAsync("**/*", async route =>
                 {
                     var type = route.Request.ResourceType;
@@ -132,8 +133,23 @@ public class StyleDetectionController(
                         await route.ContinueAsync();
                 });
 
-                await page.GotoAsync(url,
-                    new PageGotoOptions { WaitUntil = WaitUntilState.NetworkIdle, Timeout = 300000 });
+                var retryGotoPolicy = Policy
+             .Handle<TimeoutException>()
+             .Or<PlaywrightException>()
+             .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(2),
+                 (exception, timeSpan, retryCount, context) =>
+                 {
+                     Console.WriteLine($"[GotoAsync] Retry {retryCount} after {timeSpan.TotalSeconds}s due to: {exception.Message}");
+                 });
+
+                await retryGotoPolicy.ExecuteAsync(async () =>
+                {
+                    await page.GotoAsync(url, new PageGotoOptions
+                    {
+                        WaitUntil = WaitUntilState.NetworkIdle,
+                        Timeout = 300000
+                    });
+                });
 
                 var html = await page.ContentAsync();
                 var document = await context.OpenAsync(req => req.Content(html));
